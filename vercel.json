@@ -1,5 +1,5 @@
 {
   "version": 2,
-  "installCommand": "npm install --force",
+  "installCommand": "npm install --force --include=dev",
   "buildCommand": "npm run build"
 }
