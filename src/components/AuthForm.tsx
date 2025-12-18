@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import SocialProviders from "./SocialProviders";
 import {useRouter} from "next/navigation";
+import toast from "react-hot-toast";
 
 type Props = {
   mode: "sign-in" | "sign-up";
@@ -22,8 +23,16 @@ export default function AuthForm({ mode, onSubmit }: Props) {
     try {
       const result = await onSubmit(formData);
 
-      if(result?.ok) router.push("/");
+      if(result?.ok) {
+        const message = mode === "sign-in" ? "Sign in successful!" : "Sign up successful!";
+        toast.success(message);
+        setTimeout(() => {
+          router.push("/");
+        }, 1000);
+      }
     } catch (e) {
+      const errorMessage = e instanceof Error ? e.message : "An error occurred";
+      toast.error(errorMessage);
       console.log("error", e);
     }
   }
